@@ -282,7 +282,7 @@ mais l'âge d'or est passé.
 Références : F. Resa, J. Wolfowitz, P. Elias, A. Kolmogorov (utilise l'entropie 
 comme concept de base pour la classification des systèmes dynamiques).
 
-La définition meme de l'entropie n'a que peu d'importance dans le cadre rhétorique. 
+La définition même de l'entropie n'a que peu d'importance dans le cadre rhétorique. 
 Que l'on puisse en parler - point de vue rhétorique - n'apporte rien à la compréhension 
 mathématique du sujet. La chose se complique lorsqu'il faut quantifier.
 
@@ -300,33 +300,61 @@ efficace/inefficace au monde physique.
 
 \section{La mesure de l'information : pourquoi le logarithme ?}
 
-
 La théorie ne comporte rien de très complexe sur le plan 
 de la formalisation mathématique. Il faut maîtriser deux définitions :
 la quantité d'information, et l'entropie.
+On peut - après ça, s'intéresser à la redondance ou au bruit mais 
+ces premières sont plus importantes pour la compréhension 
+du sens de la théorie.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Sample table                                        %
-% Source: www1.maths.leeds.ac.uk/latex/TableHelp1.pdf %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\begin{table}[ht]
-%\caption{Sample table} % title of Table
-%\centering % used for centering table
-%\begin{tabular}{c c c c}
-% centered columns (4 columns)
-%\hline\hline %inserts double horizontal lines
-%S. No. & Column\#1 & Column\#2 & Column\#3 \\ [0.5ex]
-% inserts table
-%heading
-%\hline % inserts single horizontal line
-%1 & 50 & 837 & 970 \\
-%2 & 47 & 877 & 230 \\
-%3 & 31 & 25 & 415 \\
-%4 & 35 & 144 & 2356 \\
-%5 & 45 & 300 & 556 \\ [1ex] % [1ex] adds vertical space
-%\hline %inserts single line
-%\end{tabular}
-%\label{table:nonlin} % is used to refer this table in the text
-%\end{table}
+L'information, chez Shannon, désigne un (ensemble d') événement(s) parmi 
+un ensemble d'événements possibles.
+Toutes les mesures qui caractérisent ces événements sont probabilistes.
+
+Prenons comme exemple la recherche d'un livre dans une bibliothèque.
+Si l'on connaît une information ``pertinente'', cela peut réduire le temps
+de recherche. Par exemple, si l'on sait qu'on recherche un livre avec une 
+couverture bleue, et qu'il y en a 1/4 dans la bibliothèque, c'est une 
+information importante.
+
+On cherche donc à quantifier l'information comme ce qui réduit l'incertitude.
+Dans l'exemple cité avant, on a l'intuition que les nombres des livres concernés 
+peuvent modifier l'information : plus de livres au total, plus de livres bleus, etc.
+Mais Shannon utilise pourtant le logarithme : 
+
+
+$qté\_d\_infos = I = log(N/n)$, ce qui permet de conserver les propriétés 
+additives du logarithme. 
+(rappel : $log(a * b) = log(a) + log(b)$ )
+Concernant la base du logarithme, si la base 2 a été choisie, c'est pour une raison 
+principalement arbitraire : log(2) = 1 en base 2, or, il a été fixé que l'information 
+valait 1 lorsqu'il y avait dichotomie parfaite. Le logarithme est un choix judicieux : 
+positivité, additivité, et la base 2 pour indiquer la dichotomie parfaite.
+
+
+On voit cependant que toutes les informations ne sont peut-être pas équiprobables :
+en langue française, la fréquence des lettres est inégales. Dans ce cas, l'information 
+sera $ I = log(1/p) $ où p est le degré d'appartition, soit $ I = -log(p) $.
+
+Cette unité sera appelée le \textit{bit} par Shannon (porte d'autres noms pour d'autres).
+Un bit peut se définir de cette façon : 
+\quote{\textit{la quantité d'information qui correspond à la réduction de moitié de  l'incertitude sur un problème donné}}
+
+Reprenons l'exemple de la bibliothèque et étudions l'information : 
+Mettons qu'il y ait 4000 livres, et 500 bleus. L'information ``le livre recherché est bleu'' devient :
+$log(4000/500) = log8 = 3 $ : 3 bits. On peut expliquer ça comme ça : 
+on a divisé 4000 par 8 (4000/500 = 8) or pour écrire de 0 à 7, il faut 3 bits en binaire.
+Pour savoir dans quel tas chercher, on a donc besoin de 3 bits.
+
+Si on avait eu 1000 livres bleus, on aurait eu besoin de 2 bits, car log(4) = 2.
+L'information est de moindre ``valeur'' dans ce cas, car les ``tas'' seront de 1000 livres...
+
+La théorie de l'information est purement quantitative.
+
+On peut regrouper des informations ensemble. Attention, car selon qu'elles sont 
+dépendantes ou indépendantes, on obtient pas la même chose.
+
+On peut dénombrer ainsi 3 cas de figure :
+
 
 \end{document}
