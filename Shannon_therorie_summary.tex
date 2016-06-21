@@ -186,7 +186,7 @@ loi de probabilité étudiée.
 
 Parallèlement, en 1922, on trouve des premières pistes pour améliorer la qualité 
 et vitesse de transmission des signaux radio.
-La formule \\$W = K.logM$ résume ici que l'on considère le caractère comme unité, 
+La formule \\$W = K\times\log{M}$ résume ici que l'on considère le caractère comme unité, 
 K étant une constante dépendant de la qualité de la ligne. On note le log, 
 dont on reparlera. Il faut attendre 1948 pour que Shannon fasse progresser la matière.
 
@@ -209,7 +209,7 @@ deux problématiques légèrement différentes. Wiener arrive à quantifier
 la quantité d'information par 
 $log_{2}\frac{quantité-a-priori}{quantité-a-posteriori}$
 Wiener étend sa définition, et la rapproche de Von Neumann, de distribution continue 
-de probabilité : $ \int f(x).log_{2}f(x).dx$
+de probabilité : $ \int f(x)\times \log_{2}{f(x)}\times dx$
 
 Il ne faut pas oublier qu'à l'époque, on écrit déjà des programmes sur cartes perforées, 
 et l'on dispose d'appareils déjà évolués capable de résoudre des problèmes 
@@ -249,7 +249,7 @@ D'autres mots s'ajoutent, comme le bruit, la redondance, etc. ouvrant la porte
 à toutes sortes d'idées plus large. Mais insistons bien : la théorie de l'information 
 de Shannon porte sur quelque chose d'assez technique finalement, qui est 
 la communication dans un canal "physique". 
-On peut e demander si sa théorie aurait eu le succès qu'elle a eu si les mots 
+On peut se demander si sa théorie aurait eu le succès qu'elle a eu si les mots 
 choisis n'avaient pas permis toutes ces extrapolations extravagantes.
 
 
@@ -287,7 +287,7 @@ Que l'on puisse en parler - point de vue rhétorique - n'apporte rien à la comp
 mathématique du sujet. La chose se complique lorsqu'il faut quantifier.
 
 On peut rapprocher la théorie de l'information de ce point de vue avec la théorie des jeux, car les deux trouvent difficilement des opportunités physiques réelles de réalisation :
-la théorie des jeux suppose de posséder des matrices des choix... Ce que concrètement, 
+la théorie des jeux suppose de posséder des matrices de choix... Ce que concrètement, 
 l'on n'a jamais. La théorie de l'information peut éventuellement porter sur 
 quelque chose de physique, comme la génétique, 
 mais au delà, on dispose peu de conditions compatibles avec la théorie. 
@@ -323,9 +323,9 @@ peuvent modifier l'information : plus de livres au total, plus de livres bleus, 
 Mais Shannon utilise pourtant le logarithme : 
 
 
-$qté\_d\_infos = I = log(N/n)$, ce qui permet de conserver les propriétés 
+$qté\_d\_infos = I = log(\frac{N}{n})$, ce qui permet de conserver les propriétés 
 additives du logarithme. 
-(rappel : $log(a * b) = log(a) + log(b)$ )
+(rappel : $\log{(a \times b)} = \log{a} + \log{b}$ )
 Concernant la base du logarithme, si la base 2 a été choisie, c'est pour une raison 
 principalement arbitraire : log(2) = 1 en base 2, or, il a été fixé que l'information 
 valait 1 lorsqu'il y avait dichotomie parfaite. Le logarithme est un choix judicieux : 
@@ -334,27 +334,99 @@ positivité, additivité, et la base 2 pour indiquer la dichotomie parfaite.
 
 On voit cependant que toutes les informations ne sont peut-être pas équiprobables :
 en langue française, la fréquence des lettres est inégales. Dans ce cas, l'information 
-sera $ I = log(1/p) $ où p est le degré d'appartition, soit $ I = -log(p) $.
+sera $ I = \log{\frac{1}{p}} $ où p est le degré d'apparition, soit $ I = -\log{p} $.
 
 Cette unité sera appelée le \textit{bit} par Shannon (porte d'autres noms pour d'autres).
-Un bit peut se définir de cette façon : 
-\quote{\textit{la quantité d'information qui correspond à la réduction de moitié de  l'incertitude sur un problème donné}}
+Un bit peut se définir de cette façon :
+
+\textit{la quantité d'information qui correspond à la réduction de moitié de  l'incertitude sur un problème donné}
+
 
 Reprenons l'exemple de la bibliothèque et étudions l'information : 
 Mettons qu'il y ait 4000 livres, et 500 bleus. L'information ``le livre recherché est bleu'' devient :
-$log(4000/500) = log8 = 3 $ : 3 bits. On peut expliquer ça comme ça : 
-on a divisé 4000 par 8 (4000/500 = 8) or pour écrire de 0 à 7, il faut 3 bits en binaire.
+$\log{(\frac{4000}{500})} = \log{8} = 3 $ : 3 bits. On peut expliquer ça comme ça : 
+on a divisé 4000 par 8 ($\frac{4000}{500} = 8$) or pour écrire de 0 à 7, il faut 3 bits en binaire.
 Pour savoir dans quel tas chercher, on a donc besoin de 3 bits.
 
-Si on avait eu 1000 livres bleus, on aurait eu besoin de 2 bits, car log(4) = 2.
+Si on avait eu 1000 livres bleus, on aurait eu besoin de 2 bits, car 
+$\log{4} = 2$.
 L'information est de moindre ``valeur'' dans ce cas, car les ``tas'' seront de 1000 livres...
 
-La théorie de l'information est purement quantitative.
+On le voit dans cet exemple : la théorie de l'information est purement quantitative. 
+On peut aussi se demander la quantité d'information I(bleu clair) contenue 
+dans l'affirmation "le livre cherché est bleu clair". 
+Contrairement à ce qu'on pourrait penser de façon intuitive, la réponse 
+n'est pas $I(bleu) + I(clair) => 2 + 3 = 5 bits$ mais bien : 
+$I(bleu) = \log{\frac{4000}{250}} = \log{16} = 4$.
+La différence provient du fait que les informations sont dépendantes. 
 
-On peut regrouper des informations ensemble. Attention, car selon qu'elles sont 
-dépendantes ou indépendantes, on obtient pas la même chose.
+Si l'on fait le même exercice mais avec I(rouge clair), cette fois-ci, 
+on obtient $I(rouge clair) = I(rouge) + I(clair)$, et on peut en déduire 
+que les informations sont indépendantes. En probabilités, on formule 
+cela de cette façon : $P(rouge clair) = P(rouge)\times P(clair)$.
+
+
+On peut regrouper des informations ensemble. Attention, car selon qu'elles 
+sont dépendantes ou indépendantes, on obtient pas la même chose.
 
 On peut dénombrer ainsi 3 cas de figure :
+\begin{enumerate}
+	\item L'information totale est inférieure à la somme de ses parties. 
+	Se produit quand il y a dépendance, une information rend l'autre moins importante.
+	\item L'information totale est égale à la somme de ses parties : 
+	Les informations sont indépendantes
+	\item L'information totale est supérieure à a somme des parties :
+	Il y a dépendance, une information rend l'autre plus importante.
+\end{enumerate}
+
+Ceci permet d'en tirer une propriété multiplicative :
+Prenons le cas d'un alphabet binaire, avec équiprobabilité de 0 et de 1. 
+Chaque symbole est porteur de $\log{2}$ d'information, soit 1. 
+Si le message est composé de n symboles, alors on obtient : 
+$I = \log{2^{n}} = n \times \log{2} = n$ bits d'information.
+
+En conclusion, on peut calculer l'information avec de longs messages 
+aussi bien qu'avec des courts. 
+Cette distance nous amène aussi à nous intéresser à un autre concept primordial : 
+\textbf{l'entropie}.
+
+\section{L'entropie revisitée}
+
+L'entropie est un concept aussi fondamental pour la théorie de l'information 
+que l'information. Du fait de son utilisation dans cette théorie, il se retrouve 
+présent dans énormément d'autres domaines. Ainsi peut-on parler de 
+l'entropie d'un style musical, d'une langue étrangère, etc.
+
+L'information mesure plutôt la quantité "transmise", une production.
+L'entropie, elle, se concentre plutôt sur le potentiel \textit{avant} 
+la transmission du message, ce qui permet de comparer différents canaux, 
+différentes sources, récepteurs, en fonction de leurs propriétés.
+
+On note : 
+$H = \sum_{i}p_{i}\times \log{\frac{1}{p_{i}}}$ où $p_{i}$ désigne la 
+probabilité de l'événement i.
+
+Elle peut sembler fort abstraite, mais appliquée à un exemple, elle prend 
+tout son sens : 
+Prenons le morse, avec $P(trait) = 0.75$ et $P(point) = 0.25$. 
+La quantité d'information vaut $I(trait) = -\log{0.75} = 0.415$ bits, 
+$I(point) = -\log{0.25} = 2$ bits. L'apparition d'un point pèse 
+plus lourd que celle d'un trait. Par ailleurs, l'information 
+d'un trait vaut moins qu'une unité, celle d'un point, deux.
+
+Maintenant, si l'on prend un peu de hauteur, on imagine que cette expérience 
+sera reproduite un nombre important de fois. Alors on obtient : 
+$H = 0.75 \times 0.415 + 0.25 \times 2 = 0.811$ bits.
+Intuitivement, cela représente la \textit{propension} d'un canal à 
+émettre une certaine quantité d'information. C'est une information moyenne.
+
+Dans le cas où il y a indépendance des probabilités, la somme se simplifie : 
+$H = \log{\frac{N}{n}}$ bits. On peut en déduire que plus une distribution 
+est équiprobable, plus l'entropie est forte.
+
+\section{L'envers de l'information : la redondance}
+
+
 
 
 \end{document}
