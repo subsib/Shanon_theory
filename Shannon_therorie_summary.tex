@@ -426,7 +426,185 @@ est équiprobable, plus l'entropie est forte.
 
 \section{L'envers de l'information : la redondance}
 
+La redondance diffère de la répétition, qui est un cas particulier de celle-ci.
+Un terme pour la décrire serait plutôt "corrélation". En guise d'exemple, dans 
+la langue française, un q est quasi systématiquement suivi d'un u, même si 
+ces lettres ne sont pas les mêmes : ce n'est pas de la répétition, mais 
+la lettre suivant q est moins difficile à deviner qu'après un a, ou un e. 
+L'information du u après le q est donc peu informative.
+La redondance évoque ce caractère peu informatif.\\
 
+Afin d'optimiser l'information, on comprend que cette redondance doit être 
+le plus faible possible. Cela peut être le cas dans un alphabet 
+où chaque caractère est équiprobable. Dans ce cas, la redondance est nulle, 
+et l'entropie atteint $\log(n)$ par symbole émis. 
+La redondance d'une source est définie comme la différence entre 
+l'entropie de la source et $\log(n)$.\\
+
+Cependant, on ne cherche pas toujours à l'éviter. Ainsi, sur un canal bruyant, 
+la redondance peut permettre de vérifier l'intégrité du message.
+
+Les langues sont rarement les plus "efficaces" possibles. Ceci explique 
+pourquoi chaque fois que la transmission d'un message est coûteuse, 
+l'on cherche à mettre en place des systèmes plus courts, résumés, comme 
+la sténographie, les abréviations, etc.\\
+
+\subsection{Un nouveau sens pour les notions de bruit, d'équivoque et d'ambiguïté}
+
+Le bruit est le mot qui définit la modification d'un message entre son 
+émission et sa réception. Dans le cas d'un canal bruyant, on ne peut 
+pas être sûr que le symbole reçu soit celui qui a été envoyé. On peut 
+avoir une mesure du doute en probabilités. Dès lors, tout échange devient 
+probabiliste. L'émetteur et le récepteur ne vont pas avoir accès aux 
+mêmes informations. Ainsi, le récepteur ne peut calculer l'entropie 
+qu'à partir des symboles reçus. C'est alors qu'interviennent les 
+probabilités sous forme de "a sachant b", c'est à dire la probabilité que 
+a ait été émis quand b a été reçu.\\
+
+Le récepteur peut calculer l'entropie de cette façon : 
+$H(a|b_{j})$. Si le canal n'est pas bruyant, alors l'entropie 
+est nulle car b correspond toujours à a. Dès lors, on 
+peut calculer $H(A|B)$, ce qui est appelé "l'\textit{équivoque} du canal".\\
+
+La formule exacte de l'équivoque est : $H(A|B) = -\sum_{i,j}[p(a_{i}b_{j}).log(p(a_{i}|b_{j}))]$ 
+
+(il y a une démonstration dans le livre, mais je me dispense d'en faire le résumé ici)\\
+
+De façon symétrique, l'émetteur peut calculer l'incertitude que son message arrive 
+à son destinataire. Cette mesure s'appelle l'ambiguïté, et sa formule est 
+
+$H(B|A) = -\sum_{i,j}[p(a_{i},b_{j}).log(p(a_{i},b{j}))]$
+
+et on peut montrer que $H(A|B) \leq H(A) + H(B)$ (il y a aussi une démonstration dans le 
+livre dont je me dispense également)\\
+
+Un cas particulier concerne le cas où ces deux quantités sont égales : 
+$H(A|B) = H(A) + H(B)$.\\
+Par conséquent, une autre quantité (la différence entre ces deux valeurs) a 
+été définie : $T(A,B) = H(A) + H(B) - H(A,B)$
+appelée \textit{transinformation}.\\
+
+Cette valeur varie en fonction de la dépendance entre A et B. Si ces 
+deux valeurs sont dépendantes, la transinformation augmente. \\
+
+On peut en déduire : \\
+$H(A,B) = H(A) + H(B|A)\\
+H(A,B) = H(B) + H(A|B)\\
+T(A,B) = H(A) - H(B|A)$\\
+et les démonstrations sont dans l'ouvrage.\\
+
+Dans le cas où la liaison entre A et B est parfaite, on a 
+$T(A,B) = H(A) = H(B)$ car l'ambiguïté entre A et B est nulle.\\
+
+Voici quelques illustrations afin de comprendre ce que signifient ces formules.
+Mettons un émetteur A et un récepteur B. \\
+
+Dans le premier cas, lorsque A essaie de transmettre un message 1, B reçoit 
+avec une certaine probabilité ce même message. Idem pour un autre message. 
+Dans ce cas, le bruit est nul.
+
+Ce calcul se complique lorsque A essaie de transmettre un message, mais que 
+B reçoit celui-ci, ou un autre. Dans ce cas, la transinformation diminue, 
+et on dit que le canal est bruyant. Dans le pire des cas, on ne peut 
+jamais être sûr du message reçu, la transinformation est de 0.\\
+
+Un autre cas est celui où A essaie d'envoyer le msg 1, et B reçoit 
+soit le msg 1 soit 2 avec une probabilité de 0.5. Si A envoie le msg 2, 
+il n'est jamais reçu par B. 
+Dans ce cas, on perçoit que quelle que soit l'idée exprimée par A, 
+B l'interprète de la même façon. L'équivoque est donc très élevée, 
+et l'ambiguïté peut prendre n'importe quelle valeur.\\
+
+Dans le cas inverse, si A ne transmet que le msg 1 et que B reçoit 
+soit le msg 1 soit 2, ces valeurs sont inversées : l'équivoque est quelconque, 
+et l'ambiguïté est élevée. \\
+
+Globalement, il y a équivoque lorsque le récepteur n'est pas aussi fin que l'émetteur, 
+et il y a ambiguïté lorsque c'est l'émetteur qui n'est pas assez fin pour le récepteur.\\
+
+\textit{Équivoque} : deux messages peuvent être compris de la même manière. \\
+\textit{Ambiguïté} : un message peut être compris de plusieurs façons.\\
+
+La capacité d'un canal est la transinformation maximale qu'on peut obtenir 
+avec la loi de probabilité de la source la plus avantageuse possible. 
+Des théorèmes issus de la théorie de l'information ont montré qu'une telle valeur limite 
+est très utile, notamment car il existe toujours des codes permettant d'utiliser la 
+totalité de la capacité d'un canal, même bruyant. Ces résultats ont été la source 
+de nombreux développements de la théorie de l'information dans la communauté mathématique.\\
+
+Malgré la force de ces valeurs, ce ne sont pas ces éléments qui ont rendu célèbre la 
+théorie de l'information, mais des thèmes plus philosophiques comme la surprise, 
+l'ordre, et la complexité.\\
+
+
+\section{À la croisée de plusieurs concepts psychologiques et philosophiques essentiels}
+
+\subsection{L'information comme réduction de l'incertitude}
+
+Quoi que la théorie soit appelée "théorie de l'information", l'incertitude est 
+un de ses thèmes centraux, si bien que certains ont même axé leur étude autour 
+de celui-ci. Ils sont exactement opposés. En effet, 
+le gain d'incertitude fait baisser l'information.
+Il faut comprendre que la théorie de l'information de Shannon n'est valable 
+qu'en considérant un ensemble fini et probabilisé. Dans le cas d'un ensemble 
+infini, la théorie n'a aucun sens.\\
+
+Un point soulevé concerne la mauvaise perception des probabilités par les humains. 
+\textit{Ref citée : Harold W. Hake, The perception of frequency of occurrence 
+and the development of "Expectancy" in humain experimental subjects"}, on y rappelle 
+la très mauvaise intuition en la matière par les humains. Ceci permet d'en 
+arriver à la notion psychologique de la "surprise". Celle-ci s'analyse en 
+effet très bien à l'aide de la théorie de l'information.\\
+
+\subsection{L'information comme résultat de la surprise}
+
+Prenons le cas d'un professeur qui distribue un polycopié à une classe. 
+À chaque distribution, les élèves répondent "merci". Cette intervention est attendue et 
+très peu surprenante.
+
+Mettons qu'à la fin du cours, un seul de ces élèves viennent dire "merci" au professeur. 
+L'essence de cette intervention est bien plus lourde de sens ici, car elle n'est pas 
+attendue, et le message est différent : dans le premier cas, on remercie par usage.\\
+
+Dans le second, on exprime son remerciement pour la prestation.
+Les chercheurs séparent deux notions pour exprimer la surprise : 
+\textit{surprisal} est fonction de la quantité d'information telle que définie par la 
+théorie de l'information. 
+\textit{surprise} mesure quant à elle la composante psychologique de la surprise. \\
+
+En guise d'exemple : si l'on lance un dé 5 fois, obtenir 5 faces a la 
+même valeur de surprise que pile-face-pile-face, et pourtant, elle a une 
+valeur de surprise. \\
+
+Les événements surprenants sont plus riches d'information que les 
+événements routiniers. Une faute d'orthographe pourra en effet soulever un 
+questionnement : faute volontaire ? que signifie le message, etc. 
+L'information est plus importante. Le fait de demander un message 
+diminue également la surprise, ou l'information. \\
+
+Bref, tout ceci se trouve à la limite de la théorie de l'information voire au delà. 
+On voit qu'ici, les opérateurs mathématiques ne sont plus efficaces, et 
+le vocabulaire de la théorie sert de réservoir de vocabulaire, mais 
+ne sert pas vraiment d'outil. Cela n'a pas été souhaité par Shannon, 
+et cela dépasse le cadre de la théorie.\\
+
+Si l'on revient à la théorie en elle-même pour se recentrer sur son sens mathématique, 
+on s'aperçoit que la théorie de l'information donne des outils pour décrire 
+une notion primordiale dans les sciences dures et sociales : la complexité.
+
+
+\subsection{L'information comme mesure de la complexité}
+
+La théorie de la complexité est intuitive, elle est pourtant difficile 
+à calculer. C'est Kolmogorov, et Gregory Chaitin qui sont considérés 
+comme ses fondateurs (quoi que cette parenté soit discutée). \\
+
+En guise d'exemple, prenons une chaîne composée de 0 et de 1, et qui alternent, ou 
+une autre : \\
+$01010101010101010101\\
+01110010011011010010$\\
+Si l'on souhaite prévoir une suite à ces chaînes, pour la première, on trouvera aisément, 
+quant à la deuxième, on ne pourra rien prévoir.
 
 
 \end{document}
