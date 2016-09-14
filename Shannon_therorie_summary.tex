@@ -604,7 +604,84 @@ une autre : \\
 $01010101010101010101\\
 01110010011011010010$\\
 Si l'on souhaite prévoir une suite à ces chaînes, pour la première, on trouvera aisément, 
-quant à la deuxième, on ne pourra rien prévoir.
+quant à la deuxième, on ne pourra rien prévoir. Mais sur le plan de l'information, 
+elles sont deux chaînes de 20 caractères qui ont la même chance de tirer avec un tirage aléatoire 
+de 0 et de 1. Il faut chercher plus loin avec le concept d’aléa pour voir ce qui les différencie. 
+
+Ici intervient la notion de compressibilité : une suite qui peut se réduire à une suite plus 
+courte sans perdre d'information n'est pas une suite aléatoire. La suite qui 
+alterne les 0 et les 1 est compressible, la seconde ne l'est pas. Cela étant, le 
+problème est moins simple qu'il n'y paraît. Mais dans tous les cas, il est possible 
+de décrire la suite en un nombre minimal de bits. La \textit{complexité} est le 
+nombre minimal de bits qui est nécessaire à la description de la suite, dans une machine de 
+turing, par exemple. \\
+
+En mathématique, globalement, ce qui est novateur est complexe, ce qui est répétitif est trivial.
+Si l'on énonce deux exercices similaires, il faudra donner des détails pour le premier voire 
+expliquer la procédure. Pour le deuxième, il suffit d'écrire "comme le premier". \\
+
+\textbf{Evariste Galois} est un mathématicien célèbre du XX° siècle. qui a posé les bases 
+de la théorie des groupes, on raconte qu'il a écrit sa théorie en une nuit avant sa mort. 
+Cela est sans doute romancé, toujours est-il qu'il apparaît ici que des choses primordiales et 
+importantes peuvent s'énoncer rapidement et sans redondance. Dans cet ouvrage, les démonstrations 
+ne sont pas faites, et si le lecteur peut les faire lui-même, cela signifie qu'il aurait été
+redondant de les écrire. Cela signifie que l'on se mette d'accord sur le contenu de l'alphabet de 
+l'échange. Par exemple, pour transmettre une configuration de jeu d'échec, on peut tout décrire, 
+ou décrire par une référence à une partie, et cela si l'on présuppose que le destinataire du 
+message connaît cette référence. 
+
+\subsection{L'information dans la problématique de l'ordre et du désordre}
+
+Au début de cet ouvrage était mentionnée la proximité entre l'information et l'énergie.
+Nous allons voir que ce lien est à manier avec précaution, mais qu'il s'est trouvé au 
+centre de la théorie de l'intérêt lorsqu'une proposition de résolution 
+du paradoxe de Maxwel a été proposé vers 1950.\\
+Afin d'exposer ce paradoxe, il faut rappeler les bases de la thermodynamique.
+
+\subsection{Second principe de la thermodynamique et démon de Maxwel}
+Le second principe énonce qu'il y a une valeur (l'entropie) qui peut varier, 
+mais toujours dans le même sens. Le second principe est directionnel, 
+irréversible. Pour illustrer : prenons un réfrigérateur dont on ouvre la porte.
+Les températures se mélangent naturellement, sans apport d'énergie. Pour retrouver la 
+fraîcheur initiale, il faut un apport d'énergie.
+
+\textbf{L'entropie} est la mesure physique du désordre. On postule que l'univers tend 
+vers une entropie maximale, et qu'elle sera atteinte lorsqu'il y aura homogénéité.
+
+Pour en revenir au démon de Maxwel, il s'agit d'une histoire où dans un grand récipient 
+se trouvent deux compartiments. Le démon possède la possibilité d'ouvrir durant des temps brefs 
+une porte entre les deux et de faire passer les molécules qu'il sélectionne, de sorte 
+que le compartiment A va toujours se réchauffer, et le B refroidir. 
+On voit que cette situation est un paradoxe si on accepte le fait qu'il ne coûte pas 
+d'énergie d'ouvrir la petite porte au démon.
+Les lois qui régissent la répartition des particules de gaz sont probabilistes, et 
+on peut résumer l'entropie par la mesure des possibilités de mouvements 
+des particules. \\
+
+$S = k.\ln(W)$ est la formule physique de l'entropie. En fait, la formule 
+est très proche de cette de l'entropie dans la théorie de l'information 
+si bien que certains ont postulé que c'était l'information qui était nécessaire 
+au démon pour savoir quand ouvrir la porte, idée postulée par Léon Brillouin. 
+Mais les concetps restent différents, aussi a-t-il proposé d'adopter une autre 
+terminologie : le terme \textbf{néguentropie} pour l'entropie qui concerne 
+la théorie de l'information.
+
+\subsection{Notion de néguentropie et paradoxe de l'information négative}
+
+L'entropie a tendance à augmenter. Dans le meilleur des cas, elle stagne. 
+La néguentropie, quant à elle ne fait que diminuer. 
+
+Dans l'ouvrage, il y a des explications plus détaillées sur la différence entre les deux que je choisis de passer 
+car les détails sont un peu ardus et ne me paraissent pas indispensables.
+On y comprend que la théorie de l'information peut déboucher sur des choses bien 
+plus vastes que la théorie de base, et que c'est sans doute cela qui lui a
+permis son si grand succès.
+
+\section{La théorie de l'information : Pour quoi faire ?}
+
+\subsection{Une vocation d'origin toujours actuelle : La compression de données}
+
+
 
 
 \end{document}
