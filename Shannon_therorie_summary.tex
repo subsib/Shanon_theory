@@ -679,8 +679,183 @@ permis son si grand succès.
 
 \section{La théorie de l'information : Pour quoi faire ?}
 
-\subsection{Une vocation d'origin toujours actuelle : La compression de données}
+\subsection{Une vocation d'origine toujours actuelle : La compression de données}
 
+L'objectif atteint en premier par la théorie de Shannon est le développement 
+informatique des télécommunications, ce qui est logique au regard de 
+l'époque, et de la formation d'ingénieur de Shannon. Or, le coût des communications 
+est élevé, donc l'enjeu de réduire ce coût est important. Réduire le coût 
+est directement relié aux quantités de données envoyées. \\
+
+Mettons un alphabet ${a, b}$ et un canal par lequel on peut envoyer 
+des signaux binaires ${0,1}$. La première idée qui vient est de faire 
+correspondre et $a$ et $0$, et les $b$ avec les $1$. Mais est-ce efficace ? 
+Mettons que notre langage soit muni de la loi de probabilité suivante : 
+$p(a) = 0,7,\\ 
+p(b) = 0,3$\\
+Pour ces données, l'entropie est de : \\
+$H_{source} = 0,7.\log(\frac{1}{0,7}) + 0,3.\log(\frac{1}{0,3}) = 0,881 bits$.\\
+On voit qu'il y a une grande différence avec la réalité si l'on garde l'idée 
+de transmission intuitive alors qu'en réfléchissant en terme de probabilités :\\
+$p(aa) = 0,49,\\
+p(ab) = p(ba) = 0,21,\\
+p(b) = 0,09$\\
+
+Par exemple, le code suivant est nettement plus efficace : \\
+\begin{itemize}
+	\item aa = 0
+	\item ab = 11
+	\item ba = 100
+	\item bb = 101
+\end{itemize}
+
+Ce code est non ambigu, ce qui n'est pas le cas de tous les codes. En effet, 
+si l'on lit une suite de caractères, on ne pourra pas confondre deux suites 
+équivalentes (le morse est un code ambigu).
+Comment s'assurer que ce code est plus efficace que le premier ? 
+C'est là qu'intervient la notion de \textit{longueur}.
+
+$L = \sum\_{i}p\_{i}.l\_{i}$\\
+\textit{L'efficacité} d'un code est le nombre de bits transmis par symboles de l'alphabet, soit : \\
+$y = \frac{H}{L}$, où H est l'entropie, et L la longueur calculée précédemment. 
+Le pire des cas est atteint dans le cas de l'équiprobabilité entre tous les 
+symboles envoyés. Dans ce cas, $y = \log(n)$. 
+
+La redondance est simplement la différence entre la longueur maximale et 
+la longueur réelle du code : \\
+$r = y\_{max} - y$. \\
+Cette notion, discutée précédemment dans ce texte, prend ici son sens.\\
+
+Appliqué à l'exemple précédent, le premier code intuitif donnerait : \\
+$L = 0,7.1 + 0,3.1 = 1$\\
+L'efficacité est : $ y = \frac{0,881}{1} = 0,881$, 
+la redondance : $r = 1 - 0,881 = 0,119 bits$. \\
+
+Le second code quant à lui : \\
+$L = 0,49.1 + 0,21.2 + 0,21.3 + 0,09.3 = 1,81$ symboles binaires. \\
+L'entropie : $H = 0,49.\log(\frac{1}{0,49}) + 2\times 0,21.\log(\frac{1}{0,21}) + 
+0,09.\log(\frac{1}{0,09}) = 1,76 bits$ par message.\\
+Efficacité : $ y = \frac{1,76}{1,81} = 0,97 bits$. \\
+Autrement dit, l'efficacité est augmentée, la redondance diminuée, ce qui rejoint 
+le premier théorème de Shannon (\textit{il est toujours possible de trouver un code voisin de l'efficacité maximale}).
+Des méthodes afin de trouver ces codes ont été proposées, ainsi 
+\textbf{Huffman} et \textbf{Fano}, etc. \\
+La problématique pour le transport de code est parfois différent : transmission 
+d'image, vidéo, qui n'ont pas les mêmes prérequis, car en général, 
+dans une vidéo, deux images sont très proches, donc on ara intérêt à décrire une 
+image par rapport à celle qui la précède. Ici, la théorie de l'information a 
+joué un rôle important, car elle permet de formaliser ces techniques. 
+On aurait pu s'en passer, mais c'est mieux avec.\\
+
+\subsection{Une nouvelle approche possible de certains problèmes de logique}
+
+La théorie de l'information peut donner un éclairage nouveau à certains 
+problèmes de logique, c'est ce qu'a essayé de montrer \textbf{Georges Cullman}, 
+par exemple le problème des deux prisonniers.
+
+\subsection{Le problème du condamné à mort}
+Un condamné a deux portes pour s'échapper. L'une mène à la mort, 
+l'une permet de s'échapper. Deux gardiens montent la garde et l'un dit 
+toujours la vérité, l'autre ment toujours. 
+L'analyse avec la théorie 
+de l'information donne cela : \\
+$H\_{choix\_avant\_question} = 0,5.\log(2) + 0,5.\log(2) = 1 bit$ car le choix 
+est au hasard.\\ Mais il souhaiterait que l'entropie du choix après 
+question soit de 0, car il n'y aurait pas d'ambiguïté. Or, on a : \\
+$H\_{choix\_avant\_question} = H\_{quesiton} + H\_{choix\_après\_question}$. \\
+Or, si l'on remplace la lettre $H$ par le mot \textit{incertitude}, cette équation 
+se comprend intuitivement : on suppose que le prisonnier saura tirer tout 
+l'enseignement possible de la réponse à la question. Donc 
+$H(question) = 1$. \\
+La théorie ne peut pas nous aider à formuler une question pertinente. Mais on sait
+que la question "que me répondrait l'autre prisonnier ?" répond à ce critère.\\
+
+\subsection{L'avare}
+
+Un avare possède 26 pièces en or dont l'une est moins lourde que les autres. 
+Pour la trouver, le premier réflexe intuitif est de les chercher partout. 
+Mais en fait, il y a une solution bien plus efficace qui consiste à diviser 
+le tas en trois groupes : un de 8 et deux de 9. 
+On compare les deux de 9. Celui le plus léger comporte la bille. Dans le cas de 
+l'égalité, c'est l'autre tas restant. On procède toujours de la même façon, et il 
+n'est plus nécessaire que de faire 3 coups pour trouver la pièce. 
+
+\subsection{Un outil supplémentaire pour la statistique descriptive}
+
+G. A. Miller affirme que la quantité d'information est tout à fait similaire à ce qui est appelé \textit{variance}. Les équations sont différentes mais les 
+deux quantités évoluent de la même façon. 
+\textit{Toutes les formules classiques de l'analyse de la variance ont d'ailleurs 
+leur homologue en analyse de l'incertitude} (citation originale). 
+La différence réside dans le fait que la variance dépend d'unité de référence, là 
+où la quantité d'information n'a pas de dimension. Elle est donc plus pratique 
+dans certains cas. 
+
+\subsection{Un instrument de mesure centrale en psychologie expérimentale}
+
+Ce n'est pas en statistique que la théorie de l'information s'est avérée la 
+plus utile. Elle s'est répandue à toute vitesse dans les années 50 dans le 
+domaine de la psychologie expérimentale, avant d'en disparaître totalement 
+quelques années plus tard. La question a été : 
+"Quelle quantité d'information un cerveau humain est-il capable de traiter" ? mais 
+elle était trop complexe à aborder avec la théorie. Donc est venue une autre : 
+"quelle quantité d'information un cerveau humain est-il capable de traiter 
+en provenance de ses sens ?". Pour étudier cela, on a conduit beaucoup d'expériences 
+afin de mesurer la capacité humaine à distinguer des catégories de couleurs, etc. 
+Mais à un certain stade, les résultats se recoupaient avec ceux de la mémoire 
+de travail. La théorie de l'information a permis de procéder à toutes ces 
+expérimentation et de trouver ces résultats, et on ne le cite que très rarement.
+
+\subsection{L'utilisation du concept de néguentropie pour caractériser la nature de la vie}
+
+La recherche en biologie a aussi utilisé la théorie de l'information. Cela prend 
+peut-être son origine dans un ouvrage de \textbf{Jacques Monod} : \textit{Le Hasard 
+et la nécessité} où il parle beaucoup d'information et de bilan énergétique.
+
+À ce moment, le principe de la vie apparaissait déjà en contradiction 
+avec le deuxième principe de la thermodynamique, car la nature aurait dû 
+tendre vers plus d'uniformité, or l'évolution du vivant fait émerger des structures 
+de plus en plus complexes.
+
+Or, la théorie de l'information offrait une autre voie : la spécificité du 
+vivant pouvait consister à transformer l'énergie en information. (ceci est un peu 
+développé dans le livre, pas ici). On ne peut pas répondre à la question 
+"pourquoi le vivant créé-t-il de l'ordre" mais bien "comment", par contre. 
+
+\subsection{Une méthode d'analyse utile pour la linguistique}
+
+L'entropie s'est avéré un outil utile pour l'étude des langues. Évidemment, 
+les alphabets et autres éléments de la théorie s'y appliquent bien. 
+Mais ce qui rend la théorie applicable, c'est en considérant les langues 
+comme des systèmes "\textit{ergodiques}" (il existe une certaine constante statistique dans ce système). 
+
+La théorie a ainsi pu permettre d'étudier le niveau de redondance des langues 
+(l'anglais a une redondance d'environ 75\%). Ainsi, une langue entropique 
+est une langue qui dispose d'un vocabulaire riche, aux mots différenciés. Il 
+devient possible de comparer des langues à ce niveau, à l'aide d'outils 
+d'analyse.
+
+\subsection{De nouveaux concepts pour la réflexion sur le fait artistique}
+
+Il n'y a pas qu'avec le langage parlé que l'on communique. La création 
+artistique est aussi considérée comme communication. 
+Dès lors, on peut appliquer ces idées à de la peinture (étude des informations 
+liées à la couleur et à ses changements), à la poésie (alexandrins vs prose), 
+L'harmonie serait peut-être le juste équilibre entre une quantité 
+suffisante d'information et de redondance, car si tout est information, cela 
+n'est ni très lisible ni très agréable. S'ensuite un peu de dissertation sur 
+l'histoire de l'art que je me permets d'écourter, dont la conclusion est 
+en quelque sorte que la théorie de l'information peut apporter des outils d'analyse, 
+mais en aucun cas d'évaluation).
+
+Signalons tout de même qu'au delà des thèmes cités, la théorie de l'information 
+noue également des liens avec la théorie des jeux, et la théorie générale des 
+systèmes (et dans ce cas, le lien se fait par les instruments de mesure).
+
+En bref, on voit bien que cette théorie a pu être utilisée dans des domaines très 
+riches et variés, en vertu de quoi elle peut être placée parmi les 
+théories les plus transdisciplinaires, et les plus débattues dans le monde scientifique.
+
+\section{Conclusion}
 
 
 
